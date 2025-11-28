@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Analog Alley</title>
+  <style>
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      display: flex; 
+      flex-direction: column;
+      align-items: center; 
+      justify-content: center; 
+      height: 100vh; 
+      margin: 0;
+      background: #1a1a2e;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+    h1 {
+      margin: 0 0 10px;
+      color: #f59e0b;
+    }
+    p {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 30px;
+    }
+    button {
+      background: linear-gradient(to right, #f59e0b, #f97316);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 9999px;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="icon">📷</div>
+  <h1>You're Offline</h1>
+  <p>It looks like you've lost your internet connection.<br>Check your network and try again.</p>
+  <button onclick="window.location.reload()">Retry Connection</button>
+</body>
+</html>
