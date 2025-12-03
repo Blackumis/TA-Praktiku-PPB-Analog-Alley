@@ -169,15 +169,15 @@ const Cart = () => {
       <Navbar cartCount={cart.length} wishlistCount={wishlistCount} />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-12">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-4xl font-bold text-white">
-            Shopping Cart
-            <span className="ml-4 text-lg text-white/60">({cart.length} {cart.length === 1 ? 'item' : 'items'})</span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white">
+            Shopping<br className="sm:hidden" /> Cart
+            <span className="ml-2 sm:ml-4 text-base sm:text-lg text-white/60">({cart.length} {cart.length === 1 ? 'item' : 'items'})</span>
           </h1>
           {cart.length > 0 && (
             <button
               onClick={clearCart}
-              className="flex items-center gap-2 px-4 py-2 text-red-400 hover:bg-red-500/20 rounded-xl transition-all"
+              className="flex items-center gap-2 px-4 py-2 text-red-400 hover:bg-red-500/20 rounded-xl transition-all self-start sm:self-auto"
             >
               <Trash2 className="w-4 h-4" />
               Clear Cart
@@ -185,7 +185,7 @@ const Cart = () => {
           )}
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
             {cart.map((item) => {
@@ -195,51 +195,51 @@ const Cart = () => {
               return (
                 <div
                   key={item.id}
-                  className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 hover:border-amber-400/30 transition-all shadow-xl"
+                  className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-4 sm:p-6 hover:border-amber-400/30 transition-all shadow-xl"
                 >
-                  <div className="flex gap-6">
+                  <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                     {/* Product Image */}
-                    <Link to={`/products/${product.id}`} className="shrink-0">
+                    <Link to={`/products/${product.id}`} className="shrink-0 self-center sm:self-start">
                       <img
                         src={product.image_url || 'https://via.placeholder.com/150'}
                         alt={product.name}
-                        className="w-32 h-32 object-cover rounded-xl hover:scale-105 transition-transform"
+                        className="w-28 h-28 sm:w-32 sm:h-32 object-cover rounded-xl hover:scale-105 transition-transform"
                       />
                     </Link>
 
                     {/* Product Info */}
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <Link to={`/products/${product.id}`}>
-                        <h3 className="text-xl font-semibold text-white mb-2 hover:text-amber-400 transition-colors">
+                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 hover:text-amber-400 transition-colors line-clamp-2">
                           {product.name}
                         </h3>
                       </Link>
-                      <div className="flex items-center gap-2 mb-3">
+                      <div className="flex flex-wrap items-center gap-2 mb-3">
                         {product.brand && (
-                          <span className="px-3 py-1 bg-white/10 rounded-full text-white/60 text-sm">
+                          <span className="px-2 sm:px-3 py-1 bg-white/10 rounded-full text-white/60 text-xs sm:text-sm">
                             {product.brand}
                           </span>
                         )}
                         {product.category && (
-                          <span className="px-3 py-1 bg-amber-500/20 rounded-full text-amber-400 text-sm">
+                          <span className="px-2 sm:px-3 py-1 bg-amber-500/20 rounded-full text-amber-400 text-xs sm:text-sm">
                             {product.category}
                           </span>
                         )}
                       </div>
-                      <p className="text-amber-400 font-bold text-2xl mb-4">
+                      <p className="text-amber-400 font-bold text-xl sm:text-2xl mb-4">
                         {formatPrice(product.price)}
                       </p>
 
                       {/* Quantity Controls */}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3 bg-white/10 rounded-xl p-1">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:justify-between">
+                        <div className="flex items-center gap-2 sm:gap-3 bg-white/10 rounded-xl p-1">
                           <button
                             onClick={() => updateQuantity(item.id, product.id, -1)}
                             className="p-2 hover:bg-white/10 rounded-lg transition-colors"
                           >
                             <Minus className="w-4 h-4 text-white" />
                           </button>
-                          <span className="px-4 py-1 text-white font-semibold">
+                          <span className="px-3 sm:px-4 py-1 text-white font-semibold min-w-[2rem] text-center">
                             {item.quantity || 1}
                           </span>
                           <button
@@ -251,39 +251,39 @@ const Cart = () => {
                           </button>
                         </div>
 
-                      <button
-                        onClick={() => removeItem(item.id)}
-                        className="flex items-center gap-2 px-4 py-2 text-red-400 hover:bg-red-500/20 rounded-xl transition-all"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                        Remove
-                      </button>
-                    </div>
+                        <button
+                          onClick={() => removeItem(item.id)}
+                          className="flex items-center gap-2 px-3 sm:px-4 py-2 text-red-400 hover:bg-red-500/20 rounded-xl transition-all text-sm sm:text-base"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          Remove
+                        </button>
+                      </div>
 
-                    {/* Stock Warning */}
-                    {product.stock_quantity && product.stock_quantity <= 5 && (
-                      <p className="text-orange-400 text-sm mt-3">
-                        Only {product.stock_quantity} left in stock
-                      </p>
-                    )}
+                      {/* Stock Warning */}
+                      {product.stock_quantity && product.stock_quantity <= 5 && (
+                        <p className="text-orange-400 text-sm mt-3">
+                          Only {product.stock_quantity} left in stock
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
+              );
             })}
           </div>
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 shadow-2xl sticky top-24">
-              <h2 className="text-2xl font-bold text-white mb-6">Order Summary</h2>
+            <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-5 sm:p-6 shadow-2xl sticky top-24">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-5 sm:mb-6">Order Summary</h2>
 
-              <div className="space-y-4 mb-6">
-                <div className="flex justify-between text-white/80">
+              <div className="space-y-3 sm:space-y-4 mb-5 sm:mb-6">
+                <div className="flex justify-between text-white/80 text-sm sm:text-base">
                   <span>Subtotal</span>
                   <span className="font-semibold">{formatPrice(subtotal)}</span>
                 </div>
-                <div className="flex justify-between text-white/80">
+                <div className="flex justify-between text-white/80 text-sm sm:text-base">
                   <span>Shipping</span>
                   <span className="font-semibold">
                     {shipping === 0 ? (
@@ -293,21 +293,21 @@ const Cart = () => {
                     )}
                   </span>
                 </div>
-                <div className="flex justify-between text-white/80">
+                <div className="flex justify-between text-white/80 text-sm sm:text-base">
                   <span>Tax (11%)</span>
                   <span className="font-semibold">{formatPrice(tax)}</span>
                 </div>
                 
                 {subtotal < 2000000 && (
                   <div className="p-3 bg-amber-500/20 border border-amber-500/30 rounded-xl">
-                    <p className="text-amber-400 text-sm">
+                    <p className="text-amber-400 text-xs sm:text-sm">
                       Add {formatPrice(2000000 - subtotal)} more for FREE shipping!
                     </p>
                   </div>
                 )}
 
                 <div className="border-t border-white/10 pt-4">
-                  <div className="flex justify-between text-white text-xl font-bold">
+                  <div className="flex justify-between text-white text-lg sm:text-xl font-bold">
                     <span>Total</span>
                     <span className="text-amber-400">{formatPrice(total)}</span>
                   </div>
@@ -316,31 +316,31 @@ const Cart = () => {
 
               <Link
                 to="/checkout"
-                className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-bold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg hover:shadow-xl group"
+                className="w-full flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-bold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg hover:shadow-xl group text-sm sm:text-base"
               >
                 Proceed to Checkout
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
               <Link
                 to="/products"
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 mt-3 bg-white/10 text-white font-semibold rounded-xl hover:bg-white/15 transition-all border border-white/20"
+                className="w-full flex items-center justify-center gap-2 px-5 sm:px-6 py-3 mt-3 bg-white/10 text-white font-semibold rounded-xl hover:bg-white/15 transition-all border border-white/20 text-sm sm:text-base"
               >
                 Continue Shopping
               </Link>
 
               {/* Trust Badges */}
-              <div className="mt-6 pt-6 border-t border-white/10 space-y-3">
-                <div className="flex items-center gap-3 text-white/60 text-sm">
-                  <Package className="w-5 h-5 text-green-400" />
+              <div className="mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-white/10 space-y-2 sm:space-y-3">
+                <div className="flex items-center gap-2 sm:gap-3 text-white/60 text-xs sm:text-sm">
+                  <Package className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 shrink-0" />
                   <span>Free shipping over Rp 2.000.000</span>
                 </div>
-                <div className="flex items-center gap-3 text-white/60 text-sm">
-                  <CreditCard className="w-5 h-5 text-blue-400" />
+                <div className="flex items-center gap-2 sm:gap-3 text-white/60 text-xs sm:text-sm">
+                  <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 shrink-0" />
                   <span>Secure payment processing</span>
                 </div>
-                <div className="flex items-center gap-3 text-white/60 text-sm">
-                  <Sparkles className="w-5 h-5 text-amber-400" />
+                <div className="flex items-center gap-2 sm:gap-3 text-white/60 text-xs sm:text-sm">
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
                   <span>100% Authentic products</span>
                 </div>
               </div>
