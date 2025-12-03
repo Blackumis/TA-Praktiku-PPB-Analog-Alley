@@ -258,6 +258,7 @@ export const profileService = {
    * Get user statistics
    */
   async getUserStats(userId) {
+    // Get order count
     const { count: orderCount, error: orderError } = await supabase
       .from('orders')
       .select('*', { count: 'exact', head: true })
@@ -265,22 +266,30 @@ export const profileService = {
 
     if (orderError) throw orderError;
 
+    // Get total spent from delivered orders
     const { data: orders, error: totalError } = await supabase
       .from('orders')
-      .select('total_amount')
+      .select('total')
       .eq('user_id', userId);
 
     if (totalError) throw totalError;
 
-    const totalSpent = orders.reduce((sum, order) => sum + parseFloat(order.total_amount), 0);
+    const totalSpent = orders?.reduce((sum, order) => sum + (parseFloat(order.total) || 0), 0) || 0;
 
-    const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    const wishlistCount = wishlist.length;
+    // Get wishlist count from database
+    const { count: wishlistCount, error: wishlistError } = await supabase
+      .from('wishlist')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', userId);
+
+    if (wishlistError) {
+      console.warn('Wishlist count error:', wishlistError.message);
+    }
 
     return {
       totalOrders: orderCount || 0,
       totalSpent,
-      wishlistCount
+      wishlistCount: wishlistCount || 0
     };
   }
 };
