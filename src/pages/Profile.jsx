@@ -4,7 +4,7 @@ import {
   User, Mail, Phone, MapPin, Package, Heart, ShoppingBag, 
   Edit, Edit2, Save, X, Camera, Calendar, CreditCard, Truck, 
   Check, Clock, AlertCircle, ChevronRight, Star, Settings,
-  LogOut, Shield, Eye, EyeOff, Loader
+  LogOut, Shield, Eye, EyeOff, Loader, Store
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import { authService, profileService, ordersService, wishlistService, cartService } from '../services';
@@ -423,7 +423,7 @@ const Profile = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <button 
                 onClick={() => setEditMode(true)}
                 className="px-6 py-3 bg-amber-500 text-black font-semibold rounded-xl hover:bg-amber-600 transition-all shadow-lg shadow-amber-500/30 flex items-center gap-2"
@@ -431,6 +431,13 @@ const Profile = () => {
                 <Edit className="w-5 h-5" />
                 Edit Profile
               </button>
+              <Link
+                to="/login?redirect=/seller"
+                className="px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold rounded-xl hover:from-purple-600 hover:to-indigo-600 transition-all shadow-lg shadow-purple-500/30 flex items-center gap-2"
+              >
+                <Store className="w-5 h-5" />
+                To Seller Page
+              </Link>
               <button className="p-3 bg-white/5 border border-white/10 text-white rounded-xl hover:bg-white/10 transition-all">
                 <Camera className="w-5 h-5" />
               </button>

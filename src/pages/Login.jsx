@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link, useSearchParams } from 'react-router-dom';
 import { LogIn, ArrowRight, Mail } from 'lucide-react';
 import { authService } from '../services';
 
@@ -14,7 +14,11 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || '/profile';
+  const [searchParams] = useSearchParams();
+  
+  // Check for redirect in URL query params first, then state, then default to /profile
+  const redirectParam = searchParams.get('redirect');
+  const from = redirectParam || location.state?.from?.pathname || '/profile';
 
   const handleResendEmail = async () => {
     if (!email) {
